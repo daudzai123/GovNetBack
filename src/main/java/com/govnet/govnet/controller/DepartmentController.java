@@ -25,9 +25,6 @@ public class DepartmentController {
         return "Department added successfully";
     }
 
-
-
-
     @GetMapping("/getById/{id}")
     public DepartmentDTO getSingleDepartment(@PathVariable Long id) {
         return departmentSer.getSingleDepartment(id);
@@ -58,15 +55,18 @@ public class DepartmentController {
     public List<DropDownDTO> AllDepartmentsForDropDown() {
         return departmentSer.getAllDepartment();
     }
+
     @GetMapping("/getDepartmentsByParentDepartment/{id}")
     public List<Department> getDepartmentsByParent(@PathVariable Long id){
         return  departmentSer.getDepartmentByParentId(id);
     }
+
     @PutMapping("update/{id}")
     public ResponseEntity<String> updateDepartment(@PathVariable Long id,@RequestBody DepartmentDTO updateDepartment){
         departmentSer.updateDepartment(id,updateDepartment);
         return ResponseEntity.ok("Department updated successfully");
     }
+
     @GetMapping("/firstChild/{parentDepartmentId}")
     public ResponseEntity<List<DepartmentResponseDto>> getFirstChild(@PathVariable Long parentDepartmentId) {
         List<DepartmentResponseDto> firstChildDepartment = departmentSer.findFirstChildDepartment(parentDepartmentId);

@@ -14,7 +14,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
     private String content;
 
     private LocalDateTime createdAt = LocalDateTime.now();

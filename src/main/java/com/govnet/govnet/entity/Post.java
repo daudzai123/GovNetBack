@@ -18,13 +18,9 @@ public class Post {
     private Long id;
 
     private String title;
-
     private String content;
-
     private String media;
-
     private boolean isUrgent;
-
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -35,10 +31,14 @@ public class Post {
     }, allowSetters = true)
     private MyUser author;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    @JsonIgnoreProperties(value = { "users", "parentDepartmentId" }, allowSetters = true)
-    private Department department;
+    @ManyToMany
+    @JoinTable(
+            name = "post_visible_departments",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "department_id")
+    )
+    @JsonIgnoreProperties({"users", "parentDepartmentId"})
+    private List<Department> visibleDepartments = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
